@@ -120,8 +120,8 @@ class GroovySandboxedEnvironment extends GroovyValueFilter {
 
     private void preventUnknownPackages(Class receiver) {
         out.println "$receiver.name, $receiver.package"
-        if (!(['java', 'groovy', 'spock'].any { !receiver.package || receiver.package.name.startsWith(it) })) {
-            throw new SecurityException("No access to ${receiver.name} since the class is not in 'java.', 'groovy.' or 'spock.' packages")
+        if (!(['java', 'javax', 'groovy', 'spock'].any { !receiver.package || receiver.package.name.startsWith(it) })) {
+            throw new SecurityException("No access to ${receiver.name} since the class is not in 'java.', 'javax', 'groovy.' or 'spock.' packages")
         }
     }
 

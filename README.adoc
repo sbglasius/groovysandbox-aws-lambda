@@ -1,0 +1,21 @@
+= Groovy Sandbox AWS Lambda
+
+This is the AWS Lambda to execute abitrary Groovy Script code.
+
+The main purpose is to provide a script execution endpoint for a Slack Groovy Bot.
+
+To prevent malicious use, it utilizes the  https://github.com/kohsuke/groovy-sandbox[Groovy Sandbox].
+
+It attempts to prevent access to:
+
+* instantiating packages outside `java.`, `javax.` `groovy.` and `spock.`
+* accessing the Groovy `metaClass`
+* Running methods like `System.exit()`, `System.getProperty('key')`, `System.setProperty('key','val')`, `Runtime.getCurrentRuntime()`, `"ls".execute()` and more.
+* Prevent file system access via `File`, `URL` or `URI` methods
+* Prevent the usage of `@Grab` annotations
+
+If other attack points can be found, please raise an issue.
+
+Note: Since this will run in an AWS Lambda, the damage that can be done is limited, but reuse of the Lambda instance can occur, thus the attempted lock-down. See https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/[] for information.
+
+Writing and deploying Groovy Code to AWS Lambda was heavily inspired by this article https://medium.com/@benorama/how-to-build-a-microservice-with-aws-lambda-in-groovy-4f7384c3b804#.8y03l29t8[] by https://github.com/benorama[]
